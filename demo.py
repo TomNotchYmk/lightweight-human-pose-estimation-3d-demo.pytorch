@@ -97,8 +97,16 @@ if __name__ == '__main__':
 
         inference_result = net.infer(scaled_img)
         poses_3d, poses_2d = parse_poses(inference_result, input_scale, stride, fx, is_video)
+        
         edges = []
         if len(poses_3d):
+            print("3D points inferred:\n")
+            print(len(poses_3d[-1])//4, end="\n\n")
+            for i in range(len(poses_3d[-1])):
+                print(poses_3d[-1][i], end="  ")
+                if i % 4 == 3:
+                    print("\n")
+            print("\n")
             poses_3d = rotate_poses(poses_3d, R, t)
             poses_3d_copy = poses_3d.copy()
             x = poses_3d_copy[:, 0::4]
